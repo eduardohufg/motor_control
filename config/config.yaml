@@ -1,0 +1,20 @@
+/set_point:
+    ros__parameters:
+        amplitude: 1.75
+        omega: 1.0
+        timer_period: 0.01
+        type: 1
+
+/dc_motor:
+    ros__parameters:
+        sample_time: 0.01
+        sys_gain_K: 1.75
+        sys_tau_T: 0.5
+        initial_conditions: 0.0
+
+/controller:
+    ros__parameters:
+        Kp: 0.09
+        Ki: 0.8
+        Kd: 0.002
+        Ts: 0.01
