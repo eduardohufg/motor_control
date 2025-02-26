@@ -1,7 +1,7 @@
 # Imports
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 from rcl_interfaces.msg import SetParametersResult
 from custom_interfaces.srv import SetProcessBool
 
@@ -9,7 +9,7 @@ from custom_interfaces.srv import SetProcessBool
 #Class Definition
 class DCMotor(Node):
     def __init__(self):
-        super().__init__('dc_motor')
+        super().__init__('dc_motor_node')
 
         # Declare parameters
         # System sample time in seconds
@@ -28,7 +28,7 @@ class DCMotor(Node):
         self.initial_conditions = self.get_parameter('initial_conditions').value
 
         # Set the messages
-        self.motor_output_msg = Float32()
+        self.motor_output_msg = Float64()
 
         # Set variables to be used
         self.input_u = 0.0
@@ -36,8 +36,8 @@ class DCMotor(Node):
         self.simulation_running = False
     
         # Declare publishers, subscribers and timers
-        self.motor_input_sub = self.create_subscription(Float32, 'motor_input_u', self.input_callback,10)
-        self.motor_speed_pub = self.create_publisher(Float32, 'motor_output_y', 10)
+        self.motor_input_sub = self.create_subscription(Float64, 'motor_input_u', self.input_callback,10)
+        self.motor_speed_pub = self.create_publisher(Float64, 'motor_output_y', 10)
         self.timer = self.create_timer(self.sample_time, self.timer_cb) 
 
         # Set Server callback

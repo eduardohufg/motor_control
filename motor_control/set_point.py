@@ -1,7 +1,7 @@
 # Imports
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 from rcl_interfaces.msg import SetParametersResult
 from custom_interfaces.srv import SetProcessBool
 from numpy import sin, cos
@@ -26,14 +26,14 @@ class SetPointPublisher(Node):
         self.signal_type = self.get_parameter('type').value
 
         # Create a publisher and timer for the signal
-        self.signal_publisher = self.create_publisher(Float32, 'set_point', 10)
+        self.signal_publisher = self.create_publisher(Float64, 'set_point', 10)
         self.timer = self.create_timer(self.timer_period, self.timer_cb)
 
         # Parameters callback
         self.add_on_set_parameters_callback(self.parameters_callback)
         
         # Create a messages and variables to be used
-        self.signal_msg = Float32()
+        self.signal_msg = Float64()
         self.start_time = self.get_clock().now()
 
         #Create a service client for /EnableProcess
@@ -68,8 +68,9 @@ class SetPointPublisher(Node):
             self.signal_msg.data = self.amplitude * sawtooth(self.omega * elapsed_time, 1.)
         # Unitary Step Signal
         elif self.signal_type == 7:
+            elapsed_time = 0.0
             elapsed_time = (self.get_clock().now() - self.start_time).nanoseconds/1e9
-            if elapsed_time < 10.0:
+            if elapsed_time < 20.0:
                 self.signal_msg.data = 0.0
             else:
                 self.signal_msg.data = 1.0

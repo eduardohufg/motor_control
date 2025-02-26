@@ -14,7 +14,7 @@
 
 /controller:
     ros__parameters:
-        Kp: 0.09
-        Ki: 0.8
-        Kd: 0.002
+        Kp: 1.0
+        Ki: 3.0
+        Kd: 0.0
         Ts: 0.01

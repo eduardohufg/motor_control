@@ -1,7 +1,7 @@
 # Imports
 import rclpy
 from rclpy.node import Node
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 from rcl_interfaces.msg import SetParametersResult
 
 #Class Definition
@@ -35,12 +35,12 @@ class MotorController(Node):
         self.control_input_u = 0.0
 
         # Set the message
-        self.motor_input_u_msg = Float32()
+        self.motor_input_u_msg = Float64()
 
         # Define publishers, subscribers and timers
-        self.create_subscription(Float32, 'set_point', self.set_point_callback, 10)
-        self.create_subscription(Float32, 'motor_output_y', self.motor_output_y_callback, 10)
-        self.controller_pub = self.create_publisher(Float32, 'motor_input_u', 10)
+        self.create_subscription(Float64, 'set_point', self.set_point_callback, 10)
+        self.create_subscription(Float64, 'motor_output_y', self.motor_output_y_callback, 10)
+        self.controller_pub = self.create_publisher(Float64, 'motor_input_u', 10)
         self.create_timer(self.Ts, self.controller_callback)
 
         # Parameters callback
